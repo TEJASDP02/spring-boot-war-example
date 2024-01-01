@@ -35,7 +35,7 @@ pipeline {
             
             steps{
                 // deploy on container 
-                echo "prod"
+                deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.233.157.129:8081')], contextPath: '/app', war: '**/*.war'
 
             }
         }
