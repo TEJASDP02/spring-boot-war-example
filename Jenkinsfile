@@ -34,7 +34,7 @@ pipeline {
                 ok "Yes we Should"
             }
             
-            ste ps{
+            steps{
                 // deploy on container 
                 deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.233.157.129:8081')], contextPath: '/app', war: '**/*.war'
                 slackSend channel: 'jenkins', message: 'deployed to prod server'
