@@ -37,7 +37,7 @@ pipeline {
             steps{
                 // deploy on container 
                 deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.233.157.129:8081')], contextPath: '/app', war: '**/*.war'
-                slackSend chan nel: 'jenkins', message: 'deployed to prod server'
+                slackSend channel: 'jenkins', message: 'deployed to prod server'
             }
         }
     }
