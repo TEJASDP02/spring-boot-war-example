@@ -8,13 +8,14 @@ pipeline {
             steps{
             
                 sh "mvn test"
-               
+                slackSend channel: 'jenkins', message: 'job started'
             }
             
         }   
         stage("Build"){
             steps{
                 sh "mvn package"
+                slackSend channel: 'jenkins', message: 'building'
                 
             }
             
@@ -23,7 +24,7 @@ pipeline {
             steps{
                 // deploy on container 
                 deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://192.168.1.55:8082')], contextPath: '/app', war: '**/*.war'
-              
+                slackSend channel: 'jenkins', message: 'deployed to test server'
             }
             
         }
@@ -36,7 +37,7 @@ pipeline {
             steps{
                 // deploy on container 
                 deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.233.157.129:8081')], contextPath: '/app', war: '**/*.war'
-
+                slackSend channel: 'jenkins', message: 'deployed to prod server'
             }
         }
     }
@@ -46,11 +47,12 @@ pipeline {
         }
         success{
             echo "========pipeline executed successfully ========"
+            slackSend channel: 'jenkins', message: 'success'
            
         }
         failure{
             echo "========pipeline execution failed========"
-            
+            slackSend channel: 'jenkins', message: 'failure'
         }
     }
 }
